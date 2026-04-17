@@ -1,0 +1,125 @@
+<!-- payment.html -->
+<?php
+session_start();
+$conn = new mysqli("localhost", "root", "", "astroo");
+
+if (!isset($_SESSION['subscribe_id'])){
+echo "No subscription found.";
+exit;
+}
+
+$id = $_SESSION['subscribe_id'];
+$result = $conn->query("SELECT * FROM payments WHERE subscribe_id = $id");
+
+if ($result->num_rows != 1) {
+echo "Subscription not found.";
+exit;
+}
+
+$data = $result->fetch_assoc();
+
+$base_price = match($data['package']) {
+'Entertainment Pack' => 39.99,
+'Sport Pack' => 49.99,
+'Epic Pack' => 89.99,
+'STANDARD Pack' => 69.99,
+default => 0
+};
+
+$addon = 0;
+if ($data['addon_movie']) $addon += 15;
+if ($data['addon_sport']) $addon += 10;
+if ($data['addon_kids']) $addon += 5;
+if ($data['addon_international']) $addon += 20;
+
+$total = $base_price + $addon;
+$sst = $total * 0.06;
+$grand_total = $total + $sst;
+
+$date = date("Y-m-d");
+$payment_number = "PMT" . rand(10000,99999);
+$staff_id = "STF1001";
+
+?>
+<html>
+<head>
+<title>Payment Page</title>
+<style>
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    .payment-box {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #e6007e;
+    }
+    label {
+      font-weight: bold;
+    }
+    .summary {
+      margin-bottom: 20px;
+    }
+    .summary p {
+      margin: 5px 0;
+    }
+    button {
+      background-color: #e6007e;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    select {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="payment-box">
+<h2>Payment Summary</h2>
+
+<div class="summary">
+<p><label>Applicant:</label> <? = htmlspecialchars($data['name']) ?></p>
+<p><label>Payment No:</label> <? = $payment_number ?></p>
+<p><label>Date:</label> <? = $date ?></p>
+<p><label>Staff ID:</label> <? = $staff_id ?></p>
+<p><label>Base Fee:</label> RM <? = number_format($base_price, 2) ?></p>
+<p><label>Add-ons:</label> RM <? = number_format($addon, 2) ?></p>
+<p><label>SST (6%):</label> RM <? = number_format($sst, 2) ?></p>
+<p><label>Total Payment:</label> <strong>RM <? = number_format($grand_total, 2) ?>
+</strong></p>
+</div>
+
+<form method="post" action="confirm_payment.php">
+<label for="payment_method">Choose Payment Method:</label>
+<select name="payment_method" required>
+<option value="Visa">Visa</option>
+<option value="Mastercard">Mastercard</option>
+<option value="FPX">FPX</option>
+</select>
+
+<input type="hidden" name="id" value="<? = $id ?>">
+<input type="hidden" name="payment_number" value="<? = $payment_number ?>">
+<input type="hidden" name="payment_date" value="<? = $date ?>">
+<input type="hidden" name="staff_id" value="<? = $staff_id ?>">
+<input type="hidden" name="total_fee" value="<? = $grand_total ?>">
+
+<button type="submit">Pay Now</button>
+</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+Array
+(
+    [id] => 6
+    [name] => Mikexlass Meringgai
+    [ic] => 020703140375
+    [contact] => 0145950368
+    [status] => Yes
+    [register_date] => Monthly
+    [email] => mikexrock@gmail.com
+    [payment_status] => pending
+    [amount_paid] => as1003
+    [bill_date] => 
+)

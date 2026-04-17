@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Plan - Astro</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #1a1a2e;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 900px;
+        }
+        
+        h1 { 
+            color: #e6007e; 
+            margin-bottom: 30px;
+            font-size: 36px;
+        }
+        
+        .plans {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .plan {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 30px;
+            width: 250px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .plan:hover, .plan.selected {
+            border-color: #e6007e;
+            transform: scale(1.05);
+        }
+        
+        .plan h3 { 
+            color: #e6007e; 
+            margin-top: 0;
+            font-size: 24px;
+        }
+        
+        .price { 
+            font-size: 32px; 
+            font-weight: bold; 
+            margin: 15px 0;
+            color: white;
+        }
+        
+        .price span {
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        .features { 
+            text-align: left; 
+            font-size: 14px;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .features li { 
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .features li:before {
+            content: "✓ ";
+            color: #e6007e;
+            font-weight: bold;
+        }
+        
+        button {
+            background: #e6007e;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+        
+        button:hover { 
+            background: #ff4da6; 
+        }
+        
+        .login-link {
+            margin-top: 20px;
+            color: #aaa;
+        }
+        
+        .login-link a {
+            color: #e6007e;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose Your Plan</h1>
+        
+        <div class="plans">
+            <div class="plan" onclick="selectPlan('basic', 15, this)">
+                <h3>Basic</h3>
+                <div class="price">RM15<span>/month</span></div>
+                <ul class="features">
+                    <li>1 device only</li>
+                    <li>HD quality</li>
+                    <li>Limited content</li>
+                </ul>
+            </div>
+            
+            <div class="plan selected" onclick="selectPlan('standard', 25, this)">
+                <h3>Standard</h3>
+                <div class="price">RM25<span>/month</span></div>
+                <ul class="features">
+                    <li>2 devices</li>
+                    <li>Full HD quality</li>
+                    <li>All content</li>
+                </ul>
+            </div>
+            
+            <div class="plan" onclick="selectPlan('premium', 35, this)">
+                <h3>Premium</h3>
+                <div class="price">RM35<span>/month</span></div>
+                <ul class="features">
+                    <li>4 devices</li>
+                    <li>4K quality</li>
+                    <li>All content + exclusive</li>
+                </ul>
+            </div>
+        </div>
+        
+        <button onclick="goToPayment()">Continue to Payment</button>
+        
+        <div class="login-link">
+            Already have an account? <a href="login.html">Log in</a>
+        </div>
+    </div>
+
+    <script>
+        let selectedPlan = 'standard';
+        let selectedPrice = 25;
+
+        function selectPlan(plan, price, element) {
+            selectedPlan = plan;
+            selectedPrice = price;
+            
+            // Remove selected class from all plans
+            document.querySelectorAll('.plan').forEach(p => p.classList.remove('selected'));
+            
+            // Add selected class to clicked plan
+            element.classList.add('selected');
+        }
+
+        function goToPayment() {
+            // Save to browser storage
+            localStorage.setItem('selectedPlan', selectedPlan);
+            localStorage.setItem('selectedPrice', selectedPrice);
+            
+            // Go to payment page
+            window.location.href = 'payment_new.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow-x: hidden;
+      background: #000;
+      color: #e6007e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header-main {
+      width: 100%;
+      background: #e6007e;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 80px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      z-index: 20;
+      position: fixed;
+      top: 0;
+    }
+
+     .header-main .logo {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-left: 20px;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    font-family: 'Segoe UI', sans-serif; /* Atau cuba 'Century Gothic' */
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+    .header-main .logo:hover {
+      transform: scale(1.1);
+    }
+
+    .header-main .nav-links {
+      display: flex;
+      gap: 40px;
+      margin-right: 20px;
+    }
+
+    .header-main a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 12px 20px;
+      border-radius: 25px;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .header-main a:hover {
+      background: rgba(230, 0, 126, 0.2);
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -2;
+    }
+
+    .video-background video {
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      filter: brightness(0.65);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4); /* Seragam dengan about_us.html */
+      z-index: -1;
+    }
+
+    .faq-section {
+      width: 100%;
+      max-width: 1000px;
+      margin-top: 120px;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.6); /* Sama gaya dengan about-us */
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 0, 128, 0.2);
+      z-index: 10;
+      animation: slideUp 1.5s ease-out 0.5s backwards;
+      border: 1px solid rgba(230, 0, 126, 0.2);
+    }
+
+    .faq-section h2 {
+      font-size: 36px;
+      color: #e6007e;
+      margin-bottom: 25px;
+      text-shadow: 0 0 12px rgba(230, 0, 126, 0.9);
+      text-align: center;
+      position: relative;
+    }
+
+    .faq-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: #e6007e;
+      border-radius: 2px;
+    }
+
+    .faq-item {
+      margin-bottom: 20px;
+    }
+
+    .faq-item h3 {
+      font-size: 20px;
+      color: #e6007e;
+      margin: 5px 0;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .faq-item h3:hover {
+      color: #ff4da6;
+    }
+
+    .faq-item p {
+      font-size: 16px;
+      color: #f2f2f2;
+      margin: 5px 0 0 20px;
+      display: none;
+    }
+
+    .faq-item.active p {
+      display: block;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="header-main">
+    <div class="logo">Astro</div>
+    <div class="nav-links">
+      <a href="mainpage.html">Home</a>
+      <a href="about_us.html">About Us</a>
+      <a href="faq.html">Questions</a>
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+
+  <div class="video-background">
+    <video autoplay muted loop>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="overlay"></div>
+
+  <div class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+
+    <!-- Soalan FAQ -->
+    <div class="faq-item">
+      <h3 onclick="this.parentElement.classList.toggle('active')">What is Astro One?</h3>
+      <p>Astro One is a streaming service that offers TV packs, live sports, and on-demand content for all ages.</p>
+    </div>
+    <div class="faq-item">
+      <h3 onclick="this.parentElement.classList.toggle('active')">How do I subscribe?</h3>
+      <p>You can subscribe through our website, mobile app, or customer service line.</p>
+    </div>
+    <div class="faq-item">
+      <h3 onclick="this.parentElement.classList.toggle('active')">Can I watch on multiple devices?</h3>
+      <p>Yes, up to 5 devices depending on your selected plan using Astro GO.</p>
+    </div>
+    <div class="faq-item">
+      <h3 onclick="this.parentElement.classList.toggle('active')">What payment methods are accepted?</h3>
+      <p>We accept cards, online banking, and e-wallets like Touch 'n Go and Boost.</p>
+    </div>
+    <div class="faq-item">
+      <h3 onclick="this.parentElement.classList.toggle('active')">How can I cancel my subscription?</h3>
+      <p>Cancel anytime via account settings or by calling our hotline.</p>
+    </div>
+    <div class="faq-item">
+      <h3 onclick="this.parentElement.classList.toggle('active')">Is there a free trial?</h3>
+      <p>Yes, enjoy a 7-day free trial for new users on selected plans.</p>
+    </div>
+    <div class="faq-item">
+      <h3 onclick="this.parentElement.classList.toggle('active')">How do I contact support?</h3>
+      <p>Contact us at support@astro.com.my or call 03-9543 3838 (24/7).</p>
+    </div>
+  </div>
+
+  <script>
+    // Auto-expand first FAQ for demo
+    document.querySelector(".faq-item").classList.add("active");
+  </script>
+</body>
+</html>

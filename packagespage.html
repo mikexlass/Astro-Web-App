@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packages</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background: #1a1a2e;
+            color: #e6007e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header-main {
+            width: 100%;
+            background: #e6007e;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 20;
+            position: fixed;
+            top: 0;
+        }
+        .header-main a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .header-main a:hover {
+            background: rgba(230, 0, 126, 0.2);
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+        }
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(230, 0, 126, 0.1), rgba(26, 26, 46, 0.8));
+            z-index: -1;
+        }
+        .package-section {
+            width: 100%;
+            max-width: 900px;
+            margin-top: 100px;
+            padding: 20px;
+            z-index: 10;
+        }
+        .package-section h2 {
+            font-size: 32px;
+            color: #e6007e;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(230, 0, 126, 0.8);
+        }
+        .package-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding-bottom: 10px;
+        }
+        .package-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+        .package-slider::-webkit-scrollbar-thumb {
+            background: #e6007e;
+            border-radius: 4px;
+        }
+        .package-slider::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .package {
+            min-width: 300px;
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            flex: 0 0 auto;
+            transition: transform 0.3s ease;
+        }
+        .package:hover {
+            transform: scale(1.05);
+        }
+        .package h3 {
+            font-size: 22px;
+            color: #e6007e;
+            margin-bottom: 10px;
+        }
+        .package p {
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .package .price {
+            font-size: 24px;
+            color: #e6007e;
+            margin-bottom: 15px;
+        }
+        .package button {
+            background: linear-gradient(45deg, #e6007e, #ff4da6);
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .package button:hover {
+            background: linear-gradient(45deg, #ff4da6, #e6007e);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-main">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="faq.html">Questions</a>
+        <a href="login.html">Login</a>
+    </div>
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="overlay"></div>
+    <div class="package-section">
+        <h2>Our Packages</h2>
+        <div class="package-slider" id="packageSlider"></div>
+    </div>
+
+    <script>
+        async function fetchPackages() {
+            try {
+                const response = await fetch('http://localhost/get_package.php');
+                const packages = await response.json();
+                const packageSlider = document.getElementById('packageSlider');
+
+                packages.forEach(pkg => {
+                    const packageDiv = document.createElement('div');
+                    packageDiv.className = 'package';
+                    packageDiv.innerHTML = `
+                        <h3>${pkg.name}</h3>
+                        <p>${pkg.description}</p>
+                        <p class="price">${pkg.price}</p>
+                        <button>Get it now</button>
+                    `;
+                    packageSlider.appendChild(packageDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching packages:', error);
+                const packageSlider = document.getElementById('packageSlider');
+                packageSlider.innerHTML = '<p>Failed to load packages. Please try again later.</p>';
+            }
+        }
+
+        // Panggil fungsi untuk memuatkan pakej ketika halaman dimuat
+        window.onload = fetchPackages;
+    </script>
+</body>
+</html>

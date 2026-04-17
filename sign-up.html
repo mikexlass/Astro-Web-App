@@ -1,0 +1,29 @@
+<!-- sign-up.html -->
+<html>
+<head>
+  <title>Create Astro ID</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="login-box">
+      <h2><span class="logo">astro</span><br />Create Astro ID</h2>
+      <form action="sign-up.php" method="POST">
+        <input type="text" name="name" placeholder="Name *" required />
+        <input type="email" name="email" placeholder="Email *" required />
+        <input type="password" name="password" placeholder="Password *" required />
+        <small>Minimum 8 characters and must include a number, lowercase, and uppercase letter.</small><br><br>
+
+        <label>
+          <input type="checkbox" name="agree_terms" required />
+          I agree to the <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.
+        </label><br><br>
+
+        <button type="submit" class="login-btn">CREATE ASTRO ID</button>
+        <p class="create"><a href="Login.html">Log in instead</a></p>
+      </form>
+    </div>
+    <div class="circle"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Astro</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #1a1a2e;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            background: rgba(255,255,255,0.05);
+            padding: 40px;
+            border-radius: 20px;
+            width: 350px;
+            text-align: center;
+        }
+        
+        h1 { 
+            color: #e6007e; 
+            margin-bottom: 5px;
+        }
+        
+        .plan-badge {
+            background: #e6007e;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        
+        input::placeholder { 
+            color: #aaa; 
+        }
+        
+        button {
+            background: #e6007e;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 25px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        
+        button:hover { 
+            background: #ff4da6; 
+        }
+        
+        .error { 
+            color: #ff5252; 
+            font-size: 14px; 
+            margin-top: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Account</h1>
+        <div class="plan-badge" id="planBadge">Standard Plan</div>
+        
+        <form action="create_account.php" method="POST">
+            <!-- Hidden field to send plan to PHP -->
+            <input type="hidden" name="plan" id="planInput">
+            
+            <input type="text" name="astro_id" placeholder="Astro ID *" required>
+            <input type="password" name="password" placeholder="Password *" required>
+            <input type="email" name="email" placeholder="Email">
+            <input type="text" name="full_name" placeholder="Full Name">
+            
+            <button type="submit">Create Account & Start Watching</button>
+        </form>
+        
+        <div class="error" id="errorMsg"></div>
+    </div>
+
+    <script>
+        // Check if payment was completed
+        if (!localStorage.getItem('paymentComplete')) {
+            alert('Please complete payment first!');
+            window.location.href = 'choose_plan.html';
+        }
+
+        // Show selected plan
+        const plan = localStorage.getItem('selectedPlan') || 'standard';
+        document.getElementById('planBadge').textContent = 
+            plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
+        document.getElementById('planInput').value = plan;
+    </script>
+</body>
+</html>

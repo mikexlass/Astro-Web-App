@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 300vh;
+            overflow-x: hidden;
+            position: relative;
+            background: #1a1a2e;
+            color: #e6007e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header-main {
+    width: 100%;
+    background: #e6007e;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 80px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+    position: fixed;
+    top: 0;
+}
+.header-main .logo {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-left: 20px;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    font-family: 'Segoe UI', sans-serif; /* Atau cuba 'Century Gothic' */
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+.header-main .logo:hover {
+    transform: scale(1.1);
+}
+.header-main .nav-links {
+    display: flex;
+    gap: 40px;
+    margin-right: 20px;
+}
+.header-main a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 25px;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.header-main a:hover {
+    background: rgba(230, 0, 126, 0.2);
+    color: #ffffff;
+    transform: scale(1.1);
+}
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+        }
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(230, 0, 126, 0.1), rgba(26, 26, 46, 0.8));
+            z-index: -1;
+        }
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            background: rgba(230, 0, 126, 0.8);
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate, move 10s infinite linear;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50vw, 50vh); }
+        }
+        .content {
+            width: 100%;
+            height: 80vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            margin-top: 80px;
+        }
+        .main-text {
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .main-text h1 {
+            font-size: 60px;
+            color: #e6007e;
+            margin: 0;
+            text-shadow: 0 0 20px #e6007e;
+            font-weight: 700;
+        }
+        .main-text p {
+            font-size: 40px;
+            color: #ffffff;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(230, 0, 126, 0.7);
+        }
+        .main-text .dive-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #e6007e, #ff4da6);
+            color: #ffffff;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 24px;
+            box-shadow: 0 8px 25px rgba(230, 0, 126, 0.7);
+            transition: all 0.4s ease;
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            text-transform: uppercase;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .main-text .dive-button.round {
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            padding: 0;
+            font-size: 0;
+            background: linear-gradient(45deg, #e6007e, #ff4da6);
+            box-shadow: 0 0 30px rgba(230, 0, 126, 0.9);
+            animation: spin 1.2s linear infinite;
+        }
+        .main-text .dive-button.round::after {
+            content: '▶';
+            font-size: 24px;
+            color: #ffffff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 0 0 10px #e6007e;
+        }
+        .main-text .dive-button:hover {
+            background: linear-gradient(45deg, #ff4da6, #e6007e);
+            transform: scale(1.1) translateX(-50%);
+            box-shadow: 0 10px 35px rgba(255, 77, 166, 0.9);
+            color: #ffffff;
+        }
+        .image-section {
+            width: 100%;
+            max-width: 100%;
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+        }
+        .image-section .gallery {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px 40px;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+        .image-section .gallery img {
+            min-width: calc((100% - 80px) / 5);
+            flex: 0 0 calc((100% - 80px) / 5);
+            height: auto;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+        }
+        .image-section .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .image-section .gallery::-webkit-scrollbar {
+            display: none;
+        }
+        .image-section .gallery img.active {
+            transform: scale(1.2);
+            width: calc((100% - 80px) / 5 * 1.2);
+            flex: 0 0 calc((100% - 80px) / 5 * 1.2);
+        }
+        .top-drama-list, .top-add-on-channels {
+            width: 100%;
+            max-width: 100%;
+            margin-top: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        .top-drama-list h2, .top-add-on-channels h2 {
+            font-size: 36px;
+            color: #e6007e;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #e6007e;
+        }
+        .drama-gallery, .channel-gallery {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px 40px;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+        .drama-gallery img, .channel-gallery img {
+            min-width: calc((100% - 80px) / 5);
+            flex: 0 0 calc((100% - 80px) / 5);
+            height: auto;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+        }
+        .drama-gallery img.active, .channel-gallery img.active {
+            transform: scale(1.2);
+            width: calc((100% - 80px) / 5 * 1.2);
+            flex: 0 0 calc((100% - 80px) / 5 * 1.2);
+        }
+        .drama-gallery::-webkit-scrollbar, .channel-gallery::-webkit-scrollbar {
+            display: none;
+        }
+        .channel-packages {
+            width: 100%;
+            max-width: 100%;
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+        }
+        .channel-packages h2 {
+            font-size: 36px;
+            color: #e6007e;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #e6007e;
+        }
+        .package-gallery {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px 40px;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+        .package-gallery img {
+            min-width: calc((100% - 80px) / 5);
+            flex: 0 0 calc((100% - 80px) / 5);
+            height: auto;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+        }
+        .package-gallery img.active {
+            transform: scale(1.2);
+            width: calc((100% - 80px) / 5 * 1.2);
+            flex: 0 0 calc((100% - 80px) / 5 * 1.2);
+        }
+        .package-gallery::-webkit-scrollbar {
+            display: none;
+        }
+        .sports-mode {
+            position: absolute;
+            top: 120px;
+            right: 30px;
+            background: rgba(230, 0, 126, 0.15);
+            padding: 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .sports-mode span {
+            color: #ffffff;
+            margin-right: 15px;
+            font-weight: 600;
+        }
+        .sports-mode input {
+            width: 60px;
+            height: 28px;
+            appearance: none;
+            background: #ffffff;
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+        .sports-mode input::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: #e6007e;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: 0.3s;
+            box-shadow: 0 0 6px rgba(230, 0, 126, 0.6);
+        }
+        .sports-mode input:checked {
+            background: #e6007e;
+        }
+        .sports-mode input:checked::before {
+            left: 35px;
+            background: #ffffff;
+        }
+        .moving-line {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e6007e, transparent);
+            animation: slide 5s infinite linear;
+            z-index: 5;
+        }
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-main">
+        <div class="logo">Astro</div>
+<div class="nav-links">
+    <a href="mainpage.html">Home</a>
+    <a href="about_us.html">About Us</a>
+    <a href="faq.html">Questions</a>
+    <a href="choose_plan.html" style="background:#e6007e; padding:8px 15px; border-radius:20px;">Subscribe</a>
+    <a href="user_logout.php" style="background:rgba(255,255,255,0.3); padding:8px 15px; border-radius:20px;">Logout</a>
+</div>
+    </div>
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="overlay"></div>
+    <div class="stars">
+        <div class="star" style="width: 2px; height: 2px; top: 10%; left: 20%; animation-delay: 0s;"></div>
+        <div class="star" style="width: 3px; height: 3px; top: 30%; left: 40%; animation-delay: 1s;"></div>
+        <div class="star" style="width: 1px; height: 1px; top: 50%; left: 60%; animation-delay: 2s;"></div>
+        <div class="star" style="width: 4px; height: 4px; top: 70%; left: 80%; animation-delay: 0.5s;"></div>
+    </div>
+    <div class="content">
+        <div class="main-text">
+            <h1>Astro</h1>
+            <p>Easy to stream on any device for everyone in your family.</p>
+           
+        </div>
+    </div>
+    <div class="top-drama-list">
+        <h2>Top Drama List</h2>
+        <div class="drama-gallery">
+            <img src="p1.jpg" alt="Drama 1" title="Drama 1">
+            <img src="p2.jpg" alt="Drama 2" title="Drama 2">
+            <img src="p3.jpg" alt="Drama 3" title="Drama 3">
+            <img src="p4.jpg" alt="Drama 4" title="Drama 4">
+            <img src="p5.jpg" alt="Drama 5" title="Drama 5">
+            <img src="p6.jpg" alt="Drama 6" title="Drama 6">
+            <img src="k2.jpg" alt="Drama 7" title="Drama 7">
+            <img src="k1.jpg" alt="Drama 8" title="Drama 8">
+        </div>
+    </div>
+    <div class="top-add-on-channels">
+       
+        <h2>Kids Channels</h2>
+        <div class="channel-gallery">
+            <img src="c1.jpg" alt="Kid Channel 1" title="Kid Channel 1">
+            <img src="c2.jpg" alt="Kid Channel 2" title="Kid Channel 2">
+            <div class="video-thumb" onclick="openVideo()" style="position:relative; cursor:pointer; min-width: calc((100% - 80px) / 5); flex: 0 0 calc((100% - 80px) / 5);">
+    <img src="c3.jpg" alt="Upin & Ipin" style="width:100%; border-radius:15px; display:block;">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(230,0,126,0.9); width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+        <span style="color:white; font-size:20px;">▶</span>
+    </div>
+    <div style="position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.7); padding:5px 10px; border-radius:5px; font-size:11px; color:#e6007e; font-weight:bold;">
+        ▶ Upin & Ipin
+    </div>
+</div>
+            <img src="c4.jpg" alt="Kid Channel 4" title="Kid Channel 4">
+            <img src="c6.jpg" alt="Kid Channel 5" title="Kid Channel 5">
+            <img src="c7.jpg" alt="Kid Channel 6" title="Kid Channel 6">
+            <img src="c8.jpg" alt="Kid Channel 7" title="Kid Channel 7">
+        </div>
+    </div>
+    <div class="top-add-on-channels">
+        <h2>Movie Channels</h2>
+        <div class="channel-gallery">
+            <img src="d1.jpg" alt="Movie Channel 1" title="Movie Channel 1">
+            <img src="d2.jpg" alt="Movie Channel 2" title="Movie Channel 2">
+            <img src="d3.jpg" alt="Movie Channel 3" title="Movie Channel 3">
+            <img src="d4.jpg" alt="Movie Channel 4" title="Movie Channel 4">
+            <img src="d5.jpg" alt="Movie Channel 5" title="Movie Channel 5">
+            <img src="d6.jpg" alt="Movie Channel 6" title="Movie Channel 6">
+            <img src="d7.jpg" alt="Movie Channel 7" title="Movie Channel 7">
+        </div>
+    </div>
+    <div class="top-add-on-channels">
+        <h2>Thriller Channels</h2>
+        <div class="channel-gallery">
+            <img src="t1.jpg" alt="Thriller Channel 1" title="Thriller Channel 1">
+            <img src="t2.jpg" alt="Thriller Channel 2" title="Thriller Channel 2">
+            <img src="t3.jpg" alt="Thriller Channel 3" title="Thriller Channel 3">
+            <img src="t4.jpg" alt="Thriller Channel 4" title="Thriller Channel 4">
+            <img src="t5.jpg" alt="Thriller Channel 5" title="Thriller Channel 5">
+            <img src="t6.jpg" alt="Thriller Channel 6" title="Thriller Channel 6">
+            <img src="k2.jpg" alt="Thriller Channel 7" title="Thriller Channel 7">
+        </div>
+    </div>
+    <div class="top-add-on-channels">
+        <h2>Entertainment Channels</h2>
+        <div class="channel-gallery">
+            <img src="k1.jpg" alt="Entertainment Channel 1" title="Entertainment Channel 1">
+            <img src="k2.jpg" alt="Entertainment Channel 2" title="Entertainment Channel 2">
+            <img src="k3.jpg" alt="Entertainment Channel 3" title="Entertainment Channel 3">
+            <img src="k4.jpg" alt="Entertainment Channel 4" title="Entertainment Channel 4">
+            <img src="i1.jpg" alt="Entertainment Channel 5" title="Entertainment Channel 5">
+            <img src="i2.jpg" alt="Entertainment Channel 6" title="Entertainment Channel 6">
+            <img src="i3.jpg" alt="Entertainment Channel 7" title="Entertainment Channel 7">
+            <img src="i4.jpg" alt="Entertainment Channel 8" title="Entertainment Channel 8">
+            <img src="i5.jpg" alt="Entertainment Channel 9" title="Entertainment Channel 9">
+        </div>
+    </div>
+    <div class="moving-line"></div>
+
+    <script>
+        const diveButton = document.getElementById('diveButton');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+            const contentHeight = document.querySelector('.content').offsetHeight;
+
+            if (currentScroll > 100) {
+                diveButton.classList.add('round');
+                const newTop = currentScroll + (windowHeight / 2) - 100;
+                diveButton.style.position = 'fixed';
+                diveButton.style.top = `${newTop}px`;
+                diveButton.style.left = '50%';
+                diveButton.style.transform = `translateX(-50%)`;
+            } else {
+                diveButton.classList.remove('round');
+                diveButton.style.position = 'absolute';
+                diveButton.style.top = 'auto';
+                diveButton.style.bottom = '50px';
+                diveButton.style.left = '50%';
+                diveButton.style.transform = 'translateX(-50%)';
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Carousel dan pembesaran imej untuk .drama-gallery
+        const dramaGallery = document.querySelector('.drama-gallery');
+        const dramaImages = document.querySelectorAll('.drama-gallery img');
+        let dramaIndex = 0;
+
+        function updateActiveDramaImage() {
+            dramaImages.forEach((img, index) => {
+                img.classList.remove('active');
+                if (index === dramaIndex) {
+                    img.classList.add('active');
+                }
+            });
+        }
+
+        dramaGallery.addEventListener('scroll', () => {
+            const scrollPosition = dramaGallery.scrollLeft;
+            const imageWidth = (window.innerWidth - 80) / 5;
+            dramaIndex = Math.round(scrollPosition / imageWidth);
+            updateActiveDramaImage();
+        });
+
+        setInterval(() => {
+            dramaIndex = (dramaIndex + 1) % (dramaImages.length - 4);
+            dramaGallery.scrollTo({
+                left: dramaIndex * ((window.innerWidth - 80) / 5),
+                behavior: 'smooth'
+            });
+            updateActiveDramaImage();
+        }, 3000);
+
+        // Carousel dan pembesaran imej untuk .channel-gallery
+        const channelGallery = document.querySelectorAll('.channel-gallery');
+        channelGallery.forEach((gallery) => {
+            const channelImages = gallery.querySelectorAll('img');
+            let channelIndex = 0;
+
+            function updateActiveChannelImage() {
+                channelImages.forEach((img, index) => {
+                    img.classList.remove('active');
+                    if (index === channelIndex) {
+                        img.classList.add('active');
+                    }
+                });
+            }
+
+            gallery.addEventListener('scroll', () => {
+                const scrollPosition = gallery.scrollLeft;
+                const imageWidth = (window.innerWidth - 80) / 5;
+                channelIndex = Math.round(scrollPosition / imageWidth);
+                updateActiveChannelImage();
+            });
+
+            setInterval(() => {
+                channelIndex = (channelIndex + 1) % (channelImages.length - 4);
+                gallery.scrollTo({
+                    left: channelIndex * ((window.innerWidth - 80) / 5),
+                    behavior: 'smooth'
+                });
+                updateActiveChannelImage();
+            }, 3000);
+        });
+    </script>
+    <!-- Netflix Style Video Modal -->
+<div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:1000;">
+    <!-- Header -->
+    <div style="position:absolute; top:0; left:0; right:0; padding:20px; background:linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); z-index:1001; display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="margin:0; color:#e6007e; font-size:24px;">▶ Upin & Ipin</h2>
+        <button onclick="closeVideo()" style="background:none; border:none; color:white; font-size:30px; cursor:pointer;">×</button>
+    </div>
+    
+    <!-- Video Container -->
+    <div style="width:100%; height:100%; display:flex; justify-content:center; align-items:center; background:#000;">
+        <video id="upinVideo" controls style="width:100%; max-width:1200px; height:auto; max-height:90vh;" controlsList="nodownload">
+            <source src="upin-ipin.mp4" type="video/mp4" id="videoSource">
+            Your browser does not support video.
+        </video>
+    </div>
+    
+    <!-- Controls Bar -->
+    <div style="position:absolute; bottom:0; left:0; right:0; padding:20px; background:linear-gradient(to top, rgba(0,0,0,0.9), transparent);">
+        
+        <!-- Resolution Selector -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <div style="color:white; font-size:14px;">
+                <span id="resolutionDisplay">Quality: Auto</span>
+            </div>
+            <select id="resolutionSelect" onchange="changeResolution()" style="background:#333; color:white; border:1px solid #555; padding:5px 10px; border-radius:5px; cursor:pointer;">
+                <option value="auto">Auto</option>
+                <option value="720">720p (HD)</option>
+                <option value="1080">1080p (Full HD)</option>
+                <option value="4k">4K (Ultra HD)</option>
+            </select>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div style="width:100%; height:4px; background:#333; border-radius:2px; margin-bottom:10px; cursor:pointer;" onclick="seekVideo(event)">
+            <div id="progressBar" style="width:0%; height:100%; background:#e6007e; border-radius:2px; transition:width 0.1s;"></div>
+        </div>
+        
+        <!-- Control Buttons -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; gap:15px; align-items:center;">
+                <button onclick="togglePlay()" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">⏸</button>
+                <button onclick="skipBackward()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">⏮ 10s</button>
+                <button onclick="skipForward()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">⏭ 10s</button>
+                <span id="timeDisplay" style="color:white; font-size:14px;">0:00 / 0:00</span>
+            </div>
+            <div style="display:flex; gap:15px; align-items:center;">
+                <button onclick="toggleMute()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">🔊</button>
+                <button onclick="toggleFullscreen()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">⛶</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Video control variables
+let video = document.getElementById('upinVideo');
+let isPlaying = false;
+let progressBar = document.getElementById('progressBar');
+let timeDisplay = document.getElementById('timeDisplay');
+
+// Check subscription before opening video
+function openVideo() {
+    fetch('check_session.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'active') {
+                // Set max resolution from admin
+                let maxRes = data.max_resolution || '1080';
+                limitResolutionOptions(maxRes);
+                
+                document.getElementById('videoModal').style.display = 'block';
+                video.play();
+                isPlaying = true;
+                updateProgress();
+            } else if (data.status === 'not_logged_in') {
+                alert('Please login first!');
+                window.location.href = 'Login.html';
+            } else if (data.status === 'blocked') {
+                alert('Your account has been blocked. Contact admin.');
+            } else if (data.status === 'expired' || data.status === 'no_subscription') {
+                alert('Please subscribe to watch!');
+                window.location.href = 'choose_plan.html';
+            }
+        });
+}
+
+function limitResolutionOptions(maxRes) {
+    let select = document.getElementById('resolutionSelect');
+    let options = select.options;
+    
+    // Disable options above max resolution
+    for (let i = 0; i < options.length; i++) {
+        let resValue = options[i].value;
+        if (resValue === 'auto') continue;
+        
+        // Compare resolution values
+        let maxVal = parseInt(maxRes.replace('k', '000'));
+        let optVal = parseInt(resValue.replace('k', '000'));
+        
+        if (optVal > maxVal) {
+            options[i].disabled = true;
+            options[i].style.color = '#666';
+        } else {
+            options[i].disabled = false;
+            options[i].style.color = 'white';
+        }
+    }
+    
+    // Auto-select highest allowed resolution
+    for (let i = options.length - 1; i >= 0; i--) {
+        if (!options[i].disabled && options[i].value !== 'auto') {
+            options[i].selected = true;
+            document.getElementById('resolutionDisplay').textContent = 'Quality: ' + options[i].text;
+            break;
+        }
+    }
+}
+
+function closeVideo() {
+    document.getElementById('videoModal').style.display = 'none';
+    video.pause();
+    isPlaying = false;
+}
+
+function togglePlay() {
+    if (video.paused) {
+        video.play();
+        isPlaying = true;
+    } else {
+        video.pause();
+        isPlaying = false;
+    }
+}
+
+function skipForward() {
+    video.currentTime += 10;
+}
+
+function skipBackward() {
+    video.currentTime -= 10;
+}
+
+function toggleMute() {
+    video.muted = !video.muted;
+}
+
+function toggleFullscreen() {
+    if (video.requestFullscreen) {
+        video.requestFullscreen();
+    }
+}
+
+function changeResolution() {
+    let select = document.getElementById('resolutionSelect');
+    let quality = select.value;
+    document.getElementById('resolutionDisplay').textContent = 'Quality: ' + select.options[select.selectedIndex].text;
+    
+    let currentTime = video.currentTime;
+    console.log('Switched to ' + quality);
+    video.currentTime = currentTime;
+}
+
+function updateProgress() {
+    if (!isPlaying) return;
+    
+    let percent = (video.currentTime / video.duration) * 100;
+    progressBar.style.width = percent + '%';
+    
+    let current = formatTime(video.currentTime);
+    let total = formatTime(video.duration || 0);
+    timeDisplay.textContent = current + ' / ' + total;
+    
+    requestAnimationFrame(updateProgress);
+}
+
+function formatTime(seconds) {
+    let mins = Math.floor(seconds / 60);
+    let secs = Math.floor(seconds % 60);
+    return mins + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
+function seekVideo(event) {
+    let rect = event.target.getBoundingClientRect();
+    let percent = (event.clientX - rect.left) / rect.width;
+    video.currentTime = percent * video.duration;
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeVideo();
+});
+</script>
+</body>
+</html>
