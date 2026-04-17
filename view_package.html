@@ -1,0 +1,152 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Package - Astro</title>
+  <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #000;
+        color: black;
+      }
+      .navbar {
+        background-color: #e6007e;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .navbar h1 {
+        margin: 0;
+        color: white;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        background: #fff;
+        color: #000;
+        padding: 30px;
+        border-radius: 20px;
+      }
+      h2 {
+        color: #e6007e;
+        margin-bottom: 20px;
+      }
+      #error-message {
+        color: red;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 15px;
+        border: 1px solid #ddd;
+        vertical-align: top;
+      }
+      th {
+        background-color: #e6007e;
+        color: white;
+        text-align: center;
+      }
+      .media-box img {
+        width: 100%;
+        max-width: 150px;
+        border-radius: 10px;
+      }
+      .tag {
+        display: inline-block;
+        background-color: #e6007e;
+        color: black;
+        padding: 4px 10px;
+        margin: 2px;
+        border-radius: 10px;
+        font-size: 13px;
+      }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <h1>astro</h1>
+  <div class="nav-links">
+    <a href="staff_dashboard.html">Home</a>
+    <a href="staff_dashboard.html">Package</a>
+    <a href="customer_list_staff.html">Customer</a>
+    <a href="add_admin.html">Add Staff</a>
+  </div>
+</div>
+
+<div class="container">
+  <h2 id="title">Loading...</h2>
+  <p id="error-message"></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Basic Information / Pricing</th>
+        <th>Channels Included</th>
+        <th>Media Upload</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <p><strong>Package Name:</strong> <span id="name"></span></p>
+          <p><strong>Package Code:</strong> <span id="code"></span></p>
+          <p><strong>Description:</strong> <span id="description"></span></p>
+          <p><strong>Category / Type:</strong> <span id="category"></span></p>
+          <p><strong>Monthly Price:</strong> RM<span id="price"></span></p>
+          <p><strong>Contract Duration:</strong> <span id="contract"></span></p>
+        </td>
+        <td><ul id="channels"></ul></td>
+        <td class="media-box">
+          <img id="image" src="placeholder.jpg" alt="Package Image" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+fetch(`get_package.php?id=${id}`)
+  .then(res => res.json())
+  .then(data => {
+    console.log("Fetched data:", data);
+    document.getElementById("title").textContent = data.name + " Package";
+    document.getElementById("name").textContent = data.name;
+    document.getElementById("code").textContent = data.code;
+    document.getElementById("description").textContent = data.description;
+    document.getElementById("category").textContent = data.category;
+    document.getElementById("price").textContent = data.price;
+    document.getElementById("contract").textContent = data.contract;
+    document.getElementById("image").src = data.image_url || 'placeholder.jpg';
+
+    const list = document.getElementById("channels");
+    list.innerHTML = "";
+    const channels = data.channels ? data.channels.split("-") :[];
+    channels.forEach(c => {
+      const li = document.createElement("li");
+      li.textContent = c.trim();
+      list.appendChild(li);
+    });
+  })
+  .catch(error => {
+    document.getElementById("title").textContent = "Package Not Found";
+    console.error("Error loading package:", error);
+  });
+</script>
+</body>
+</html>

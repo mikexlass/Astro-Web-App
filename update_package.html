@@ -1,0 +1,222 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Package - Astro</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+      body 
+  {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #000;
+        color: #fff;
+      }
+      .navbar 
+  {
+        background-color: #e6007e;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .navbar h1 
+  {
+        margin: 0;
+        color: white;
+      }
+      .nav-links 
+  {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-links a 
+  {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .form-container 
+  {
+        background: rgba(255, 255, 255, 0.1);
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 30px;
+        border-radius: 20px;
+      }
+      h2 
+  {
+        color: #e6007e;
+        margin-bottom: 20px;
+      }
+      input, textarea, select 
+  {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 8px;
+      }
+      .form-row 
+  {
+        display: flex;
+        gap: 10px;
+      }
+  .form-row > div 
+  {
+    flex: 1;
+  }
+  .category-wrapper 
+  {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0; 
+  }
+
+  .category-columns 
+  {
+    display: flex;
+    gap: 60px;
+  }
+
+  .category-columns .column 
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .checkbox-wrapper 
+  {
+    width: 200px;
+    display: flex;
+    align-items: center;
+  }
+
+  .checkbox-wrapper label 
+  {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .checkbox-wrapper input[type="checkbox"] 
+  {
+    margin-right: 10px;
+    transform: scale(1.2);
+  }
+  button 
+  {
+     width: 100%;
+     padding: 12px;
+     background: #e6007e;
+     color: white;
+     border: none;
+     border-radius: 8px;
+     font-weight: bold;
+     cursor: pointer;
+  }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <h1>astro</h1>
+  <div class="nav-links">
+    <a href="staff_dashboard.html">Home</a>
+    <a href="staff_dashboard.html">Package</a>
+    <a href="customer_list_staff.html">Customer</a>
+    <a href="add_admin.html">Add Staff</a>
+  </div>
+</div>
+
+<div class="form-container">
+  <h2 id="title">Update Package</h2>
+  <form action="update_package.php" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id" id="id">
+    <input type="text" name="name" id="name" placeholder="Package Name *" required>
+    <input type="text" name="code" id="code" placeholder="Package Code *" required>
+    <textarea name="description" id="description" placeholder="Description *" required></textarea>
+
+    <div class="form-row">
+      <div><input type="text" name="price" id="price" placeholder="Monthly Price *" required></div>
+      <div>
+        <select name="contract" id="contract" required>
+          <option value="">Contract Duration *</option>
+          <option value="No Contract">No Contract</option>
+          <option value="6 Months">6 Months</option>
+          <option value="12 Months">12 Months</option>
+          <option value="24 Months">24 Months</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="category" style="display: block; margin-bottom: 10px; font-weight: bold;">Category</label>
+    <div class="category-wrapper">
+      <div class="category-columns">
+
+        <div class="column">
+          <div class="checkbox-wrapper">
+            <label><input type="checkbox" name="category[]" value="Entertainment"> Entertainment</label>
+          </div>
+          <div class="checkbox-wrapper">
+            <label><input type="checkbox" name="category[]" value="Kids & Education"> Kids & Education</label>
+          </div>
+          <div class="checkbox-wrapper">
+            <label><input type="checkbox" name="category[]" value="News"> News</label>
+          </div>
+          <div class="checkbox-wrapper">
+            <label><input type="checkbox" name="category[]" value="Sports"> Sports</label>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="checkbox-wrapper">
+            <label><input type="checkbox" name="category[]" value="Music & Radio"> Music & Radio</label>
+          </div>
+          <div class="checkbox-wrapper">
+            <label><input type="checkbox" name="category[]" value="Local"> Local</label>
+          </div>
+          <div class="checkbox-wrapper">
+            <label><input type="checkbox" name="category[]" value="International"> International</label>
+          </div>
+          <div class="checkbox-wrapper">
+            <label><input type="checkbox" name="category[]" value="Movies"> Movies</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <label style="margin-bottom: 10px; display: block;">Attached Package Image</label>
+    <input type="file" name="image" accept="image/*">
+
+    <textarea name="channels" id="channels" placeholder="Channel included *" required></textarea>
+
+    <button type="submit">UPDATE</button>
+  </form>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  fetch(`get_package.php?id=${id}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("id").value = data.id;
+    document.getElementById("name").value = data.name;
+    document.getElementById("code").value = data.code;
+    document.getElementById("description").value = data.description;
+    document.getElementById("price").value = data.price;
+    document.getElementById("contract").value = data.contract;
+    document.getElementById("channels").value = data.channels;
+
+    const selectedCategories = data.category.split(" - ");
+    document.querySelectorAll('input[name="category[]"]').forEach(cb => {
+      if (selectedCategories.includes(cb.value)) cb.checked = true;
+    });
+
+    document.getElementById("title").textContent = data.name + " Package";
+  });
+</script>
+</body>
+</html>

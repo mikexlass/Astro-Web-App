@@ -1,0 +1,160 @@
+<!-- Subscribe.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Subscribe to Astro</title>
+<style>
+    body 
+{
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container 
+{
+      max-width: 600px;
+      background-color: #1a1a1a;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    h2
+{
+      color: #e6007e;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label 
+{
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, select, textarea 
+{
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    input[type="submit"] 
+{
+      background-color: #e6007e;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .checkbox-group label 
+{
+      display: block;
+      font-weight: normal;
+    }
+
+    .checkbox-group input 
+{
+      width: auto;
+      margin-right: 8px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+<a href="dashboard.html" class="bg-black-500 text-white px-4 py-2 rounded 
+hover:bg-pink-600 transition">🏠 Home</a>
+<h2>Astro Subscription Form</h2>
+<form action="subscribe.php" method="POST">
+<label>Applicant Name</label>
+<input type="text" name="name" required>
+
+<label>IC Number</label>
+<input type="text" name="ic" required>
+
+<label>Contact Number</label>
+<input type="text" name="contact" required>
+
+<label>Email</label>
+<input type="email" name="email" required>
+
+<label>Gender</label>
+<select name="gender" required>
+<option value="">-- Select Gender --</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+
+<label>Birth of Date</label>
+<input type="date" name="dob" required>
+
+<label>Full Address</label>
+<textarea name="address" rows="3" required></textarea>
+
+<label>Chosen Astro Package</label>
+<select name="package" id="packageDropdown" required>
+<option value="">-- Select Package --</option>
+</select>
+
+<label>Astro Package Type</label>
+<select name="package_type" required>
+<option value="">-- Select Type --</option>
+<option value="Monthly">Monthly</option>
+<option value="6 Months">6 Months</option>
+<option value="12 Months">12 Months</option>
+<option value="24 Months">24 Months</option>
+</select>
+
+<label>Astro Account Number</label>
+<input type="text" name="acc_number" required>
+
+<label>Existing Subscriber?</label>
+<select name="existing_subscriber" required>
+<option value="">-- Select --</option>
+<option value="Yes">Yes</option>
+<option value="No">No</option>
+</select>
+
+<label>Add-On Packs</label>
+<div class="checkbox-group">
+<label><input type="checkbox" name="addons[]" value="Movie RM15/month"> Movie 
+RM15/month</label>
+<label><input type="checkbox" name="addons[]" value="Sport Mini RM10/month">
+ Sport Mini RM10/month</label>
+<label><input type="checkbox" name="addons[]" value="Kids RM5/month"> Kids 
+RM5/month</label>
+<label><input type="checkbox" name="addons[]" value="International RM20/month">
+ International RM20/month</label>
+</div>
+
+<input type="submit" value="Subscribe">
+</form>
+</div>
+
+<script>
+fetch('load_packages.php')
+.then(response => response.json())
+.then(data => {
+const dropdown = document.getElementById('packageDropdown');
+data.forEach(pkg => {
+const option = document.createElement('option');
+option.value = pkg.name;
+option.textContent = `${pkg.name}`;
+dropdown.appendChild(option);
+});
+})
+.catch(error => {
+console.error('Error fetching package names:', error);
+});
+</script>
+</body>
+</html>
