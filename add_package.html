@@ -1,0 +1,184 @@
+<!-- add_package.html -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add New Package - Astro</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #000;
+        color: #fff;
+      }
+      .navbar {
+        background-color: #e6007e;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .navbar h1 {
+        margin: 0;
+        color: white;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .form-container {
+        background: rgba(255, 255, 255, 0.1);
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 30px;
+        border-radius: 20px;
+      }
+      h2 {
+        color: #e6007e;
+        margin-bottom: 20px;
+      }
+      input, textarea, select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 8px;
+      }
+      .form-row {
+        display: flex;
+        gap: 10px;
+      }
+      .form-row > div {
+        flex: 1;
+      }
+      .category-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0; /* jarak atas dan bawah */
+  }
+
+  .category-columns {
+    display: flex;
+    gap: 60px;
+  }
+
+  .category-columns .column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .checkbox-wrapper {
+    width: 200px;
+    display: flex;
+    align-items: center;
+  }
+
+  .checkbox-wrapper label {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .checkbox-wrapper input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+  }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #e6007e;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+  </style>
+</head>
+<body>
+<div class="navbar">
+<h1>astro</h1>
+<div class="nav-links">
+<a href="admin_dashboard.html">Home</a>
+<a href="admin_dashboard.html" style="text-decoration: underline;">Package</a>
+<a href="customer_list.html">Customer</a>
+<a href="add_admin.html">Add Staff</a>
+</div>
+</div>
+</div>
+
+<div class="form-container">
+<h2>Add New Package</h2>
+<form action="add_package.php" method="POST" enctype="multipart/form-data">
+<input type="text" name="name" placeholder="Package Name *" required>
+<input type="text" name="code" placeholder="Package Code *" required>
+<textarea name="description" placeholder="Description *" required></textarea>
+
+<div class="form-row">
+<div><input type="text" name="price" placeholder="Monthly Price *" required></div>
+<div>
+<select name="contract" required>
+<option value="">Contract Duration *</option>
+<option value="No Contract">No Contract</option>
+<option value="6 Months">6 Months</option>
+<option value="12 Months">12 Months</option>
+<option value="24 Months">24 Months</option>
+</select>
+</div>
+</div>
+
+<label for="category" style="display: block; margin-bottom: 10px; font-weight: bold;">Category</label>
+<div class="category-wrapper">
+<div class="category-columns">
+<!-- Kolum Kiri -->
+<div class="column">
+<div class="checkbox-wrapper">
+<label><input type="checkbox" name="category[]" value="Entertainment"> Entertainment</label>
+</div>
+<div class="checkbox-wrapper">
+<label><input type="checkbox" name="category[]" value="Kids & Education"> Kids & Education</label>
+</div>
+<div class="checkbox-wrapper">
+<label><input type="checkbox" name="category[]" value="News"> News</label>
+</div>
+<div class="checkbox-wrapper">
+<label><input type="checkbox" name="category[]" value="Sports"> Sports</label>
+</div>
+</div>
+
+<!-- Kolum Kanan -->
+<div class="column">
+<div class="checkbox-wrapper">
+<label><input type="checkbox" name="category[]" value="Music & Radio"> Music & Radio</label>
+</div>
+<div class="checkbox-wrapper">
+<label><input type="checkbox" name="category[]" value="Local"> Local</label>
+</div>
+<div class="checkbox-wrapper">
+<label><input type="checkbox" name="category[]" value="International"> International</label>
+</div>
+<div class="checkbox-wrapper">
+<label><input type="checkbox" name="category[]" value="Movies"> Movies</label>
+</div>
+</div>
+</div>
+</div>
+
+<label style="margin-bottom: 10px; display: block;">Attached Package Image</label>
+<input type="file" name="image" accept="image/*" required>
+
+<textarea name="channels" placeholder="Channel included * (channel name (channel code)) - (channel name (channel code))" required></textarea>
+
+<button type="submit">CREATE PACKAGE</button>
+</form>
+</div>
+</body>
+</html>

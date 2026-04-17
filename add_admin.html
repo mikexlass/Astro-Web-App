@@ -1,0 +1,179 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add New Staff - Astro</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #000;
+        background-size: cover;
+        padding-top: 80px; /* space for navbar */
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* align top after navbar */
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 15px 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      .navbar h1 {
+        margin: 0;
+        color: #fff;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-links a {
+        color: #e6007e;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .form-container {
+        background: #e6e6e6;
+        padding: 30px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 900px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        position: relative;
+      }
+
+      .form-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .form-header img {
+        height: 25px;
+        margin-right: 10px;
+      }
+
+      .form-header h2 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      input, select {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        font-size: 14px;
+      }
+
+      .dob-group {
+        display: flex;
+        gap: 5px;
+      }
+
+      .dob-group input {
+        flex: 1;
+      }
+
+      .note {
+        font-size: 12px;
+        color: #555;
+      }
+
+      .submit-btn {
+        width: 100%;
+        background-color: #e6007e;
+        color: white;
+        border: none;
+        padding: 12px;
+        margin-top: 20px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #555;
+      }
+
+      .close-btn:hover {
+        color: #000;
+      }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <h1>astro</h1>
+  <div class="nav-links">
+	<a href="staff_dashboard.html">Home</a>
+    <a href="staff_dashboard.html">Package</a>
+    <a href="customer_list_staff.html">Customer</a>
+    <a href="add_admin.html"style="text-decoration:underline;">Add Staff</a>
+  </div>
+</div>
+
+<div class="form-container">
+  <div class="close-btn" onclick="history.back()">×</div>
+  <div class="form-header">
+    <h2>Add New Staff</h2>
+  </div>
+  <form action="admins.php" method="POST">
+    <div class="form-grid">
+      <input type="text" name="staff_name" placeholder="Staff Name *" required>
+      <input type="text" name="staff_id" placeholder="Staff ID *" required>
+      <input type="text" name="ic_passport" placeholder="New IC / Passport No *" required>
+      <select name="position_id" required>
+        <option value="" disabled selected>Position Type *</option>
+        <option value="1">Manager</option>
+        <option value="2">Assistant</option>
+        <option value="3">Support</option>
+      </select>
+
+      <input type="text" name="contact" placeholder="Contact Number *" required>
+      <input type="text" name="address" placeholder="Full Address *" required>
+      <input type="email" name="email" placeholder="Email *" required>
+      <input type="password" name="password" placeholder="Password *" required>
+      <select name="gender" required>
+        <option value="" disabled selected>Gender *</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <div class="dob-group">
+        <input type="text" name="dob_day" placeholder="DD" required>
+        <input type="text" name="dob_month" placeholder="MM" required>
+        <input type="text" name="dob_year" placeholder="YYYY" required>
+      </div>
+    </div>
+    <p class="note">Minimum 8 characters and must include a number, lowercase and uppercase letter.</p>
+    <button class="submit-btn" type="submit">Add New Staff</button>
+  </form>
+</div>
+</body>
+</html>

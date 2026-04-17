@@ -1,0 +1,166 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Astro</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+      }
+      .navbar {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .navbar h1 {
+        margin: 0;
+        color: #fff;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-links a {
+        color: #e6007e;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .dashboard {
+        padding: 30px;
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+        justify-content: flex-start;
+        align-items: stretch;
+      }
+      .card {
+        background: #fff;
+        color: #000;
+        border-radius: 15px;
+        width: 220px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .card img {
+        width: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+        height: 120px;
+      }
+      .card h3 {
+        margin: 10px 0 5px 0;
+        font-size: 1.1em;
+      }
+      .card p {
+        font-size: 0.85em;
+        margin-bottom: 10px;
+      }
+      .card .btn {
+        margin: 5px 0;
+        padding: 8px;
+        border: none;
+        border-radius: 20px;
+        background: #e6007e;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .add-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        font-weight: bold;
+        background: rgba(255,255,255,0.3);
+        color: #e6007e;
+        cursor: pointer;
+        width: 220px;
+        height: 310px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        flex-shrink: 0;
+      }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <h1>astro</h1>
+  <div class="nav-links">
+    <a href="Login.html">Log Out</a>
+    <a href="admin_dashboard.html" style="text-decoration: underline;">Package</a>
+    <a href="customer_list.html">Customer</a>
+    <a href="staff_list.html">Staff</a>
+  </div>
+</div>
+
+<div class="dashboard" id="package-list">
+  <!-- Cards will be loaded here via JavaScript -->
+</div>
+
+<script>
+  const list = document.getElementById('package-list');
+
+  // Add "+" card for new package
+  const addCard = document.createElement('div');
+  addCard.className = 'add-card';
+  addCard.onclick = () => location.href = 'add_package.html';
+  addCard.innerText = '+';
+  list.appendChild(addCard);
+
+  // Load packages
+  fetch('load_packages.php')
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      data.forEach(pkg => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        // Join category array into string if it is array
+        const categoryText = Array.isArray(pkg.category) ? pkg.category.join(', ') : pkg.category;
+        const image = pkg.image_url && pkg.image_url !== '' ? pkg.image_url : 'placeholder.jpg';
+
+        card.innerHTML = `
+          <img src="${image}" alt="${pkg.name}" />
+          <h3>${pkg.name}</h3>
+          <p style="font-size: 0.85em;"><strong>Contract:</strong> ${pkg.contract}</p>
+          <p style="font-size: 0.8em;">${pkg.description}</p>
+          <button class="btn" onclick="location.href='view_package.html?id=${pkg.id}'">View</button>
+          <button class="btn" onclick="location.href='update_package.html?id=${pkg.id}'">Update</button>
+          <button class="btn" onclick="confirmDelete('${pkg.name}', ${pkg.id})">Remove</button>
+        `;
+        list.insertBefore(card, list.lastChild);
+      });
+    })
+    .catch(err => {
+      const errorCard = document.createElement('div');
+      errorCard.style.color = 'yellow';
+      errorCard.style.fontWeight = 'bold';
+      errorCard.innerText = `⚠ Error loading packages: ${err.message}`;
+      list.appendChild(errorCard);
+      console.error(err);
+    });
+
+  function confirmDelete(name, id) {
+    if (confirm(`Are you sure you want to delete ${name}?`)) {
+      location.href = `delete_package.php?id=${id}`;
+    }
+  }
+</script>
+
+</body>
+</html>
